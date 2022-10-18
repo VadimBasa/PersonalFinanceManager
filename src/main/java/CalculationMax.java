@@ -11,7 +11,7 @@ public class CalculationMax {
     private Map<String, Integer> postServer = new HashMap<>();
 
     /////////////////////////////////////метод, который переводит файл TSV в List, проводит расчеты Max и выдает пару из Map
-    public static Map tsvr2(File file) throws IOException {
+    public static Map loadFromTSV(File file) throws IOException {
 
         List<String[]> categories = new ArrayList<>();
         Marcet marcet = new Marcet();

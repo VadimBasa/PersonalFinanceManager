@@ -41,7 +41,7 @@ public class Main {
                     Marcet marcet = gson.fromJson(Main.server.getTextClient(), Marcet.class);
                     server.basket.add(marcet);// добавляем в массив корзины сообщения с клиента
                     //System.out.println("Заголовок: " + marcet.title + "\nДата: " + marcet.date + "\nСумма: " + marcet.sum);
-                    System.out.println("{\"maxCategory\": " + CalculationMax.tsvr2(new File("categories.tsv"))+ " }");
+                    System.out.println("{\"maxCategory\": " + CalculationMax.loadFromTSV(new File("categories.tsv"))+ " }");
                 }
             }
         } catch (IOException e) {
