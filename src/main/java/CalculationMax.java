@@ -38,8 +38,8 @@ public class CalculationMax {
                 Comparator.comparingInt(Map.Entry::getValue)).getKey();
         int maxFinSum = postServer.get(maxFinCategory);
         JSONObject jsonMaxSum = new JSONObject();
-        jsonMaxSum.put("sum", maxFinSum);
         jsonMaxSum.put("categories", maxFinCategory);
+        jsonMaxSum.put("sum", maxFinSum);
         return jsonMaxSum;
     }
 }
