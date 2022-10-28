@@ -23,14 +23,21 @@ public class CalculationMax {
         for (String[] s : categories) {
             resultsMap.put((String) s[0], (String) s[1]);
         }
-
         for (String key : resultsMap.keySet()) {
             for (Marcet index : Main.basket) {
                 if (!resultsMap.containsKey(index.title)) {
                     postServer.put("другое", index.sum);
                 }
                 if (index.title.equals(key)) {
-                    postServer.put(resultsMap.get(key), index.sum);
+                    if (postServer.isEmpty()) {
+                        postServer.put(resultsMap.get(key), index.sum);
+                    } else {
+                        for (String i : postServer.keySet()) {
+                            int sum = postServer.containsKey(resultsMap.get(key)) ? postServer.get(i) : 0;        // index.sum : 0;        //sum = postServer.get(keyCat) == null ? 0 : postServer.get(keyCat);
+                            sum += index.sum;
+                            postServer.put(resultsMap.get(key), sum);
+                        }
+                    }
                 }
             }
         }
