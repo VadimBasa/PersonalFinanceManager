@@ -23,13 +23,12 @@ public class TestCalculationMax {
     @BeforeEach
     void setUp() {
         mainServer = Mockito.mock(Main.class);
-
     }
 
     @Test
     public void testLoadOtherFromTSV() throws IOException {
         Marcet marcetTest = gsonTest.fromJson(textJsonOther, Marcet.class);
-        mainServer.basket.add(marcetTest);
+        calculationMax.basket.add(marcetTest);
         Map actualResult = (calculationMax.loadFromTSV(new File("categories.tsv")));
         JSONObject expectedResult = new JSONObject();
         expectedResult.put("categories", "другое");
@@ -39,12 +38,10 @@ public class TestCalculationMax {
         Assertions.assertEquals(expectedResult.get("categories"), actualResult.get("categories"));
     }
 
-    // @BeforeEach
-
     @Test
     public void testLoadCategoryFromTSV() throws IOException {
         Marcet marcetTestCategory = gsonTest.fromJson(textJsonCetegory, Marcet.class);
-        mainServer.basket.add(marcetTestCategory);
+        calculationMax.basket.add(marcetTestCategory);
         Map actualResult = (calculationMax.loadFromTSV(new File("categories.tsv")));
         JSONObject expectedResult = new JSONObject();
         expectedResult.put("categories", "финансы");

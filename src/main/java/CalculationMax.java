@@ -11,13 +11,14 @@ import java.util.Map;
 
 public class CalculationMax {
     private Map<String, Integer> postServer = new HashMap<>();
-    private List<Marcet> basket = new ArrayList<>();
+    protected List<Marcet> basket = new ArrayList<>();
 
     ////////////////////////////////////////////////метод создания корзины///////////////////////////////////
     public void addMarcet(BufferedReader in) throws IOException {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        Marcet marcet = gson.fromJson(in,Marcet.class);
+        String inRead = in.readLine();
+        Marcet marcet = gson.fromJson(inRead,Marcet.class);
         basket.add(marcet);// добавляем в массив корзины сообщения с клиента
     }
 
