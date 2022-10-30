@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.json.simple.JSONObject;
 
 import java.io.*;
@@ -9,12 +11,21 @@ import java.util.Map;
 
 public class CalculationMax {
     private Map<String, Integer> postServer = new HashMap<>();
+    private List<Marcet> basket = new ArrayList<>();
+
+    ////////////////////////////////////////////////метод создания корзины///////////////////////////////////
+    public void addMarcet(BufferedReader in) throws IOException {
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        Marcet marcet = gson.fromJson(in,Marcet.class);
+        basket.add(marcet);// добавляем в массив корзины сообщения с клиента
+    }
 
     /////////////////////////////////////метод, который переводит файл TSV в List, проводит расчеты Max и выдает пару из Map
-    public static Map loadFromTSV(File file) throws IOException {
+    public Map loadFromTSV(File file) throws IOException {
 
         List<String[]> categories = new ArrayList<>();
-        Marcet marcet = new Marcet();
+        //Marcet marcet = new Marcet(title, date, sum);
         Map<String, Integer> postServer = new HashMap<>();
         categories = Files.lines(file.toPath())
                 .map(line -> line.split("\t"))
@@ -23,21 +34,24 @@ public class CalculationMax {
         for (String[] s : categories) {
             resultsMap.put((String) s[0], (String) s[1]);
         }
-        for (String key : resultsMap.keySet()) {
-            for (Marcet index : Main.basket) {
-                if (!resultsMap.containsKey(index.title)) {
+
+        for (Marcet index : basket) {
+            if (!resultsMap.containsKey(index.title)) {
+                if (postServer.isEmpty()) {
                     postServer.put("другое", index.sum);
+                } else {
+                    int sum = postServer.get("другое");
+                    sum += index.sum;
+                    postServer.put("другое", sum);
                 }
-                if (index.title.equals(key)) {
-                    if (postServer.isEmpty()) {
-                        postServer.put(resultsMap.get(key), index.sum);
-                    } else {
-                        for (String i : postServer.keySet()) {
-                            int sum = postServer.containsKey(resultsMap.get(key)) ? postServer.get(i) : 0;        // index.sum : 0;        //sum = postServer.get(keyCat) == null ? 0 : postServer.get(keyCat);
-                            sum += index.sum;
-                            postServer.put(resultsMap.get(key), sum);
-                        }
-                    }
+            }
+            if (resultsMap.containsKey(index.title)) {
+                if (postServer.isEmpty()) {
+                    postServer.put(resultsMap.get(index.title), index.sum);
+                } else {
+                    int sum = postServer.containsKey(resultsMap.get(index.title)) ? postServer.get(resultsMap.get(index.title)) : 0;
+                    sum += index.sum;
+                    postServer.put(resultsMap.get(index.title), sum);
                 }
             }
         }
@@ -50,4 +64,3 @@ public class CalculationMax {
         return jsonMaxSum;
     }
 }
-

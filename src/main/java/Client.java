@@ -10,7 +10,7 @@ public class Client {
              PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
             //далее клиент отправляет на сервер {"title": "булка", "date": "2022.02.08", "sum": 200}
-            String jsonText = "{\"title\": \"колбаса\", \"date\": \"2022.02.08\", \"sum\": 200}";
+            String jsonText = "{\"title\": \"шило\", \"date\": \"2022.02.08\", \"sum\": 500}";
             out.println(jsonText);
             System.out.println(in.readLine());
         } catch (IOException e) {
