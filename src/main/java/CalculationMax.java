@@ -18,7 +18,7 @@ public class CalculationMax {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         String inRead = in.readLine();
-        Marcet marcet = gson.fromJson(inRead,Marcet.class);
+        Marcet marcet = gson.fromJson(inRead, Marcet.class);
         basket.add(marcet);// добавляем в массив корзины сообщения с клиента
     }
 
@@ -38,7 +38,7 @@ public class CalculationMax {
 
         for (Marcet index : basket) {
             if (!resultsMap.containsKey(index.title)) {
-                if (postServer.isEmpty()) {
+                if (!postServer.containsKey("другое")) {
                     postServer.put("другое", index.sum);
                 } else {
                     int sum = postServer.get("другое");
