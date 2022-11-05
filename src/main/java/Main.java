@@ -20,7 +20,7 @@ public class Main {
                      BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
                     System.out.println("New connection accepted");
                     calculationMax.addMarcet(in);
-                    System.out.println("{\"maxCategory\": " + calculationMax.loadFromTSV(new File("categories.tsv")) + " }");
+                    out.println("{\"maxCategory\": " + calculationMax.loadFromTSV(new File("categories.tsv")) + " }");
                 }
             }
         } catch (IOException e) {
